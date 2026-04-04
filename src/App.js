@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO93w3p-L1Nl9zIOopMVvz3wRemoveCARlJjB7C31kp_JDa2cLbHiM9i_6BjSQWF6iRemovel-LN/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj_dafanlGhupCz3ULkku431jqkDmqZa6RLt5lOpxh46FPfKARrlw942YZluz3jWv4/exec";
 
 const DEFAULT_JOBS = [
   { id: "J001", name: "Essex Fells CC", color: "#F97316" },
@@ -75,10 +75,10 @@ function calcOT(entry, sub) {
 
 async function apiPost(body) {
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
+    const params = new URLSearchParams();
+    params.append("action", body.action);
+    params.append("payload", JSON.stringify(body));
+    const res = await fetch(SCRIPT_URL + "?" + params.toString());
     return await res.json();
   } catch (e) {
     console.error("API error", e);
