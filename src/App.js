@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO93w3p-L1Nl9zIOopMVvz3wXCARlJjB7C31kp_JDa2cLbHiM9i_6BjSQWF6iXl-LN/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzO93w3p-L1Nl9zIOopMVvz3wRemoveCARlJjB7C31kp_JDa2cLbHiM9i_6BjSQWF6iRemovel-LN/exec";
 
 const DEFAULT_JOBS = [
   { id: "J001", name: "Essex Fells CC", color: "#F97316" },
@@ -53,7 +53,7 @@ function fTime(d) { return new Date(d).toLocaleTimeString("en-US",{hour:"2-digit
 function fDate(d) { return new Date(d).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}); }
 function fDateLong(s) { return new Date(s+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}); }
 function calcHrs(e) { return (new Date(e.clockOut)-new Date(e.clockIn))/3600000; }
-function ini(n) { return n.split(" ").map(x=>x[0]).join("").toUpperCase().slice(0,2); }
+function ini(n) { return n.split(" ").map(x=>x0).join("").toUpperCase().slice(0,2); }
 function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
 function lsGet(key, fb) { try { const v=localStorage.getItem(key); return v?JSON.parse(v):fb; } catch { return fb; } }
 function lsSet(key, val) { try { localStorage.setItem(key,JSON.stringify(val)); } catch {} }
@@ -124,7 +124,7 @@ const CSS = `
   .fade { animation: fi .28s ease; }
   @keyframes fi { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
   .shake { animation: shk .4s ease; }
-  @keyframes shk { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
+  @keyframes shk { 0%,100%{transform:translateRemove(0)} 20%,60%{transform:translateRemove(-8px)} 40%,80%{transform:translateRemove(8px)} }
   input, select { background: #252836; border: 1px solid #33364A; border-radius: 10px; color: #E8E9F0; padding: 9px 13px; font-family: inherit; font-size: 14px; outline: none; transition: border .15s; width: 100%; }
   input:focus, select:focus { border-color: #F97316; }
   input[type=number] { width: 78px; text-align: center; }
@@ -169,9 +169,9 @@ function PinScreen({ subs, onLogin }) {
     <div style={{minHeight:"100vh",background:"#0F1117",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'DM Sans',sans-serif"}}>
       <style>{CSS}</style>
       <div style={{width:320,textAlign:"center"}}>
-        <div style={{width:56,height:56,background:"#F97316",borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 20px"}}>ðŸ—ï¸</div>
+        <div style={{width:56,height:56,background:"#F97316",borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 20px"}}>B</div>
         <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:22,color:"#fff",marginBottom:4}}>BuildTrack Pro</div>
-        <div style={{fontSize:13,color:"#8B8FA8",marginBottom:36}}>Xtreme Contractors</div>
+        <div style={{fontSize:13,color:"#8B8FA8",marginBottom:36}}>Removetreme Contractors</div>
         <div style={{fontSize:13,color:shake?"#EF4444":"#8B8FA8",marginBottom:18,fontWeight:500}}>{label}</div>
         <div className={shake?"shake":""} style={{display:"flex",justifyContent:"center",gap:16,marginBottom:36}}>
           {[0,1,2,3].map(i => (
@@ -181,7 +181,7 @@ function PinScreen({ subs, onLogin }) {
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,justifyItems:"center"}}>
           {KEYS.map((k,i) => (
             <div key={i} className={"key"+(k===""?" empty":"")} onClick={() => k && press(k)}>
-              {k === "del" ? "âŒ«" : k}
+              {k === "del" ? "<" : k}
             </div>
           ))}
         </div>
@@ -197,7 +197,7 @@ function Modal({ title, onClose, children }) {
       <div style={{background:"#1A1D27",border:"1px solid #252836",borderRadius:18,padding:28,width:"100%",maxWidth:460,maxHeight:"85vh",overflowY:"auto"}} onClick={e => e.stopPropagation()}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22}}>
           <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:17}}>{title}</div>
-          <button onClick={onClose} style={{background:"none",border:"none",color:"#8B8FA8",fontSize:20,cursor:"pointer"}}>âœ•</button>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"#8B8FA8",fontSize:20,cursor:"pointer"}}>Remove</button>
         </div>
         {children}
       </div>
@@ -324,7 +324,7 @@ export default function App() {
     await apiPost({ action:"approve", id });
     await loadEntries();
     setSyncing(false);
-    showToast("Approved âœ“");
+    showToast("Approved Approve");
   }
 
   async function approveAll() {
@@ -419,7 +419,7 @@ export default function App() {
     const csv = rows.map(r => r.map(v => '"'+String(v||"").replace(/"/g,'""')+'"').join(",")).join("\n");
     const a = document.createElement("a");
     a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
-    a.download = "Xtreme_Contractors_"+crewDate+".csv";
+    a.download = "Removetreme_Contractors_"+crewDate+".csv";
     a.click();
     showToast("CSV exported!");
   }
@@ -523,16 +523,16 @@ export default function App() {
       <div style={{background:"#13151E",borderBottom:"1px solid #1E2130",padding:"0 24px",position:"sticky",top:0,zIndex:100}}>
         <div style={{maxWidth:1100,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:62}}>
           <div style={{display:"flex",alignItems:"center",gap:11}}>
-            <div style={{width:34,height:34,background:"#F97316",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17}}>ðŸ—ï¸</div>
+            <div style={{width:34,height:34,background:"#F97316",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17}}>B</div>
             <div>
               <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:15,color:"#fff"}}>BuildTrack Pro</div>
-              <div style={{fontSize:11,color:"#8B8FA8"}}>{isAdmin?"ðŸ‘‘ Admin":"ðŸ‘· "+(subObj?subObj.name:"")}</div>
+              <div style={{fontSize:11,color:"#8B8FA8"}}>{isAdmin?"Admin Admin":"Worker "+(subObj?subObj.name:"")}</div>
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
-            {isAdmin && <button className="btn btn-ghost btn-sm" onClick={loadEntries} disabled={loadingEntries}>ðŸ”„ Refresh</button>}
+            {isAdmin && <button className="btn btn-ghost btn-sm" onClick={loadEntries} disabled={loadingEntries}>R Refresh</button>}
             {isAdmin && <div style={{fontSize:12,color:"#8B8FA8",background:"#1A1D27",borderRadius:8,padding:"5px 10px"}}>{fTime(now)}</div>}
-            <button className="btn btn-ghost btn-sm" onClick={() => { setSession(null); setSelectedJob(null); setCrewHours({}); setEntries([]); }}>ðŸ”’ Logout</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => { setSession(null); setSelectedJob(null); setCrewHours({}); setEntries([]); }}>Logout Logout</button>
           </div>
         </div>
       </div>
@@ -555,7 +555,7 @@ export default function App() {
                     <div key={j.id} className={"sc"+(selectedJob===j.id?" on":"")} onClick={() => setSelectedJob(j.id)}>
                       <div style={{width:10,height:10,borderRadius:"50%",background:j.color,flexShrink:0}} />
                       <div style={{flex:1,fontWeight:600,fontSize:14}}>{j.name}</div>
-                      {selectedJob===j.id && <span style={{color:"#F97316"}}>âœ“</span>}
+                      {selectedJob===j.id && <span style={{color:"#F97316"}}>Approve</span>}
                     </div>
                   ))}
                 </div>
@@ -603,8 +603,8 @@ export default function App() {
                           <input type="number" min="0" max="24" step="0.5" placeholder="0" value={crewHours[w.id]||""} onChange={e => setCrewHours(p=>({...p,[w.id]:e.target.value}))} style={{width:72}} />
                           <span style={{color:"#8B8FA8",fontSize:12}}>hrs</span>
                         </div>
-                        {active && h>OVERTIME_AFTER && <div style={{marginTop:7,fontSize:11,color:"#FBBF24",fontWeight:700}}>âš  Overtime</div>}
-                        {active && h<=OVERTIME_AFTER && <div style={{marginTop:7,fontSize:11,color:"#10B981",fontWeight:600}}>âœ“ {h}h</div>}
+                        {active && h>OVERTIME_AFTER && <div style={{marginTop:7,fontSize:11,color:"#FBBF24",fontWeight:700}}>Overtime</div>}
+                        {active && h<=OVERTIME_AFTER && <div style={{marginTop:7,fontSize:11,color:"#10B981",fontWeight:600}}>Approve {h}h</div>}
                       </div>
                     );
                   })}
@@ -612,12 +612,12 @@ export default function App() {
 
                 <div style={{display:"flex",justifyContent:"flex-end"}}>
                   <button className="btn btn-or" onClick={submitCrewHours} disabled={filledWorkers===0||syncing} style={{fontSize:15,padding:"12px 28px"}}>
-                    {syncing ? "Saving..." : "âœ… Submit Hours"}
+                    {syncing ? "Saving..." : "Approve Submit Hours"}
                   </button>
                 </div>
                 {submitted && (
                   <div className="fade" style={{marginTop:14,background:"rgba(16,185,129,.08)",border:"1px solid rgba(16,185,129,.4)",borderRadius:10,padding:13,color:"#10B981",fontWeight:600,fontSize:13,textAlign:"center"}}>
-                    âœ“ Hours saved to Google Sheets! The office will review and approve.
+                    Approve Hours saved to Google Sheets! The office will review and approve.
                   </div>
                 )}
               </div>
@@ -625,7 +625,7 @@ export default function App() {
 
             {entries.filter(e => e.subId===session.subId||e.subName===subObj?.name).length > 0 && (
               <div className="card" style={{padding:20,marginTop:16}}>
-                <div style={{fontWeight:700,fontSize:14,marginBottom:12}}>ðŸ“‹ Recent Submissions</div>
+                <div style={{fontWeight:700,fontSize:14,marginBottom:12}}>= Recent Submissions</div>
                 <table>
                   <thead><tr>{["Worker","Job","Date","Hours","Status"].map(h => <th key={h}>{h}</th>)}</tr></thead>
                   <tbody>
@@ -638,7 +638,7 @@ export default function App() {
                           <td><div style={{display:"flex",alignItems:"center",gap:6}}><div style={{width:7,height:7,borderRadius:"50%",background:j?j.color:"#555"}} />{j?j.name:e.jobName||""}</div></td>
                           <td style={{color:"#8B8FA8"}}>{fDate(e.clockIn)}</td>
                           <td style={{fontWeight:700,color:"#F97316"}}>{calcHrs(e).toFixed(1)}h</td>
-                          <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"âœ“ Approved":"Pending"}</span></td>
+                          <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"Approved":"Pending"}</span></td>
                         </tr>
                       );
                     })}
@@ -655,9 +655,9 @@ export default function App() {
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22,flexWrap:"wrap",gap:12}}>
               <div>
                 <h1 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:21,fontWeight:700}}>Admin Dashboard</h1>
-                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Xtreme Contractors â€” synced with Google Sheets</p>
+                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Removetreme Contractors â€” synced with Google Sheets</p>
               </div>
-              <button className="btn btn-or" onClick={exportCSV} style={{fontSize:13}}>â¬‡ Export CSV (QuickBooks)</button>
+              <button className="btn btn-or" onClick={exportCSV} style={{fontSize:13}}>Export CSV (QuickBooks)</button>
             </div>
 
             {loadingEntries && (
@@ -670,10 +670,10 @@ export default function App() {
               <>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:13,marginBottom:20}}>
                   {[
-                    {label:"Total Entries", value:entries.length, icon:"ðŸ“‹", color:"#3B82F6"},
-                    {label:"Total Hours", value:totalHrs.toFixed(1)+"h", icon:"â±ï¸", color:"#F97316"},
-                    {label:"Pending", value:pending, icon:"âš ï¸", color:"#FBBF24"},
-                    {label:"Est. Labor Cost", value:"$"+totalCost.toLocaleString("en-US",{maximumFractionDigits:0}), icon:"ðŸ’°", color:"#10B981"}
+                    {label:"Total Entries", value:entries.length, icon:"=", color:"#3B82F6"},
+                    {label:"Total Hours", value:totalHrs.toFixed(1)+"h", icon:"T", color:"#F97316"},
+                    {label:"Pending", value:pending, icon:"!ï¸", color:"#FBBF24"},
+                    {label:"Est. Labor Cost", value:"$"+totalCost.toLocaleString("en-US",{maximumFractionDigits:0}), icon:"$", color:"#10B981"}
                   ].map(s => (
                     <div className="card" key={s.label} style={{padding:16}}>
                       <div style={{fontSize:18,marginBottom:8}}>{s.icon}</div>
@@ -684,7 +684,7 @@ export default function App() {
                 </div>
 
                 <div style={{display:"flex",gap:4,marginBottom:16,background:"#1A1D27",borderRadius:11,padding:4,width:"fit-content",flexWrap:"wrap"}}>
-                  {[["overview","ðŸ“Š Overview"],["timesheets","ðŸ“‹ Timesheets"],["costs","ðŸ’° Costs"],["manage","âš™ï¸ Manage"]].map(([t,l]) => (
+                  {[["overview","~ Overview"],["timesheets","= Timesheets"],["costs","$ Costs"],["manage","~ Manage"]].map(([t,l]) => (
                     <button key={t} className={"tab"+(adminTab===t?" on":"")} onClick={() => setAdminTab(t)}>{l}</button>
                   ))}
                 </div>
@@ -692,7 +692,7 @@ export default function App() {
                 {adminTab === "overview" && (
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
                     <div className="card" style={{padding:20}}>
-                      <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>ðŸ¢ By Subcontractor</div>
+                      <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>@ By Subcontractor</div>
                       {subStats.length===0 && <div style={{color:"#444",fontSize:13}}>No entries yet.</div>}
                       {subStats.map(s => {
                         const pct = totalHrs>0?(s.hrs/totalHrs)*100:0;
@@ -717,7 +717,7 @@ export default function App() {
                       })}
                     </div>
                     <div className="card" style={{padding:20}}>
-                      <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>ðŸ“ By Job Site</div>
+                      <div style={{fontWeight:700,fontSize:14,marginBottom:14}}>* By Job Site</div>
                       {jobStats.map(j => {
                         const pct = totalHrs>0?(j.hrs/totalHrs)*100:0;
                         return (
@@ -757,14 +757,14 @@ export default function App() {
                       </select>
                       {entries.some(e=>!e.approved) && (
                         <button className="btn btn-gr btn-sm" onClick={approveAll} style={{marginLeft:"auto"}} disabled={syncing}>
-                          {syncing?"Saving...":"âœ“ Approve All"}
+                          {syncing?"Saving...":"Approve Approve All"}
                         </button>
                       )}
                     </div>
                     {filteredEntries.length===0 ? (
                       <div style={{textAlign:"center",color:"#444",padding:"36px 0",fontSize:13}}>No entries yet.</div>
                     ) : (
-                      <div style={{overflowX:"auto"}}>
+                      <div style={{overflowRemove:"auto"}}>
                         <table>
                           <thead>
                             <tr>{["Sub","Worker","Job","Date","Hrs","Rate","OT","Pay","Status",""].map(h => <th key={h}>{h}</th>)}</tr>
@@ -787,11 +787,11 @@ export default function App() {
                                   <td style={{color:"#8B8FA8",fontSize:11}}>{s?(s.payType==="daily"?"$"+s.rate+"/day":"$"+s.rate+"/hr"):""}</td>
                                   <td style={{color:ot>0?"#FBBF24":"#444",fontWeight:ot>0?700:400}}>{s&&s.payType==="daily"?"â€”":ot>0?"+"+ot.toFixed(1)+"h":"â€”"}</td>
                                   <td style={{color:"#10B981",fontWeight:700}}>${pay.toFixed(0)}</td>
-                                  <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"âœ“":"Pending"}</span></td>
+                                  <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"Approve":"Pending"}</span></td>
                                   <td>
                                     <div style={{display:"flex",gap:4}}>
-                                      {!e.approved && <button className="btn btn-gr btn-sm" onClick={() => approveEntry(e.id)} disabled={syncing}>âœ“</button>}
-                                      <button className="btn btn-rd btn-sm" onClick={() => deleteEntry(e.id)}>âœ•</button>
+                                      {!e.approved && <button className="btn btn-gr btn-sm" onClick={() => approveEntry(e.id)} disabled={syncing}>Approve</button>}
+                                      <button className="btn btn-rd btn-sm" onClick={() => deleteEntry(e.id)}>Remove</button>
                                     </div>
                                   </td>
                                 </tr>
@@ -856,7 +856,7 @@ export default function App() {
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
                     <div className="card" style={{padding:20}}>
                       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-                        <div style={{fontWeight:700,fontSize:15}}>ðŸ“ Job Sites</div>
+                        <div style={{fontWeight:700,fontSize:15}}>* Job Sites</div>
                         <button className="btn btn-or btn-sm" onClick={() => { setForm({}); setEditing(null); setModal("addJob"); }}>+ Add Job</button>
                       </div>
                       {jobs.map(j => (
@@ -864,14 +864,14 @@ export default function App() {
                           <div style={{width:10,height:10,borderRadius:"50%",background:j.color,flexShrink:0}} />
                           <div style={{flex:1,fontSize:13,fontWeight:500}}>{j.name}</div>
                           <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:j.name,color:j.color}); setEditing(j); setModal("addJob"); }}>âœï¸</button>
-                          <button className="btn btn-rd btn-sm" onClick={() => removeJob(j.id)}>âœ•</button>
+                          <button className="btn btn-rd btn-sm" onClick={() => removeJob(j.id)}>Remove</button>
                         </div>
                       ))}
                     </div>
 
                     <div className="card" style={{padding:20}}>
                       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-                        <div style={{fontWeight:700,fontSize:15}}>ðŸ¢ Subcontractors</div>
+                        <div style={{fontWeight:700,fontSize:15}}>@ Subcontractors</div>
                         <button className="btn btn-or btn-sm" onClick={() => { setForm({payType:"hourly"}); setEditing(null); setModal("addSub"); }}>+ Add Sub</button>
                       </div>
                       {subs.map(s => (
@@ -885,7 +885,7 @@ export default function App() {
                               </div>
                             </div>
                             <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:s.name,trade:s.trade,payType:s.payType,rate:s.rate,pin:s.pin}); setEditing(s); setModal("addSub"); }}>âœï¸</button>
-                            <button className="btn btn-rd btn-sm" onClick={() => removeSub(s.id)}>âœ•</button>
+                            <button className="btn btn-rd btn-sm" onClick={() => removeSub(s.id)}>Remove</button>
                           </div>
                         </div>
                       ))}
@@ -893,7 +893,7 @@ export default function App() {
 
                     <div className="card" style={{padding:20,gridColumn:"1/-1"}}>
                       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-                        <div style={{fontWeight:700,fontSize:15}}>ðŸ‘· Workers</div>
+                        <div style={{fontWeight:700,fontSize:15}}>Worker Workers</div>
                         <button className="btn btn-or btn-sm" onClick={() => { setForm({}); setModal("addWorker"); }}>+ Add Worker</button>
                       </div>
                       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:8}}>
@@ -907,7 +907,7 @@ export default function App() {
                                 <div key={w.id} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:"1px solid #1E2130"}}>
                                   <div style={{width:22,height:22,borderRadius:"50%",background:"#1A1D27",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#F97316",flexShrink:0}}>{ini(w.name)}</div>
                                   <span style={{flex:1,fontSize:12,fontWeight:500}}>{w.name}</span>
-                                  <button className="btn btn-rd" style={{padding:"2px 7px",fontSize:11,borderRadius:6}} onClick={() => removeWorker(w.id)}>âœ•</button>
+                                  <button className="btn btn-rd" style={{padding:"2px 7px",fontSize:11,borderRadius:6}} onClick={() => removeWorker(w.id)}>Remove</button>
                                 </div>
                               ))}
                             </div>
