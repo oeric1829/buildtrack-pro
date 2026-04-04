@@ -53,7 +53,7 @@ function fTime(d) { return new Date(d).toLocaleTimeString("en-US",{hour:"2-digit
 function fDate(d) { return new Date(d).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}); }
 function fDateLong(s) { return new Date(s+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}); }
 function calcHrs(e) { return (new Date(e.clockOut)-new Date(e.clockIn))/3600000; }
-function ini(n) { return n.split(" ").map(x=>x0).join("").toUpperCase().slice(0,2); }
+function ini(n) { return n.split(" ").map(x=>x[0]).join("").toUpperCase().slice(0,2); }
 function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
 function lsGet(key, fb) { try { const v=localStorage.getItem(key); return v?JSON.parse(v):fb; } catch { return fb; } }
 function lsSet(key, val) { try { localStorage.setItem(key,JSON.stringify(val)); } catch {} }
@@ -124,7 +124,7 @@ const CSS = `
   .fade { animation: fi .28s ease; }
   @keyframes fi { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
   .shake { animation: shk .4s ease; }
-  @keyframes shk { 0%,100%{transform:translateRemove(0)} 20%,60%{transform:translateRemove(-8px)} 40%,80%{transform:translateRemove(8px)} }
+  @keyframes shk { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
   input, select { background: #252836; border: 1px solid #33364A; border-radius: 10px; color: #E8E9F0; padding: 9px 13px; font-family: inherit; font-size: 14px; outline: none; transition: border .15s; width: 100%; }
   input:focus, select:focus { border-color: #F97316; }
   input[type=number] { width: 78px; text-align: center; }
@@ -152,7 +152,7 @@ function PinScreen({ subs, onLogin }) {
     if (p === ADMIN_PIN) { onLogin("admin", null); return; }
     const s = subs.find(x => x.pin === p);
     if (s) { onLogin("sub", s.id); return; }
-    setShake(true); setLabel("Wrong PIN â€” try again"); setPin("");
+    setShake(true); setLabel("Wrong PIN — try again"); setPin("");
     setTimeout(() => { setShake(false); setLabel("Enter your PIN"); }, 1000);
   }
 
@@ -197,7 +197,7 @@ function Modal({ title, onClose, children }) {
       <div style={{background:"#1A1D27",border:"1px solid #252836",borderRadius:18,padding:28,width:"100%",maxWidth:460,maxHeight:"85vh",overflowY:"auto"}} onClick={e => e.stopPropagation()}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22}}>
           <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:17}}>{title}</div>
-          <button onClick={onClose} style={{background:"none",border:"none",color:"#8B8FA8",fontSize:20,cursor:"pointer"}}>Remove</button>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"#8B8FA8",fontSize:20,cursor:"pointer"}}>X</button>
         </div>
         {children}
       </div>
@@ -349,7 +349,7 @@ export default function App() {
 
   function deleteEntry(id) {
     setEntries(prev => prev.filter(e => e.id !== id));
-    showToast("Removed locally â€” refresh to sync","info");
+    showToast("Removed locally — refresh to sync","info");
   }
 
   async function submitCrewHours() {
@@ -552,13 +552,13 @@ export default function App() {
         {!isAdmin && (
           <div className="fade">
             <div style={{marginBottom:22}}>
-              <h1 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:21,fontWeight:700}}>Daily Hours â€” {subObj?subObj.name:""}</h1>
+              <h1 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:21,fontWeight:700}}>Daily Hours — {subObj?subObj.name:""}</h1>
               <p style={{color:"#8B8FA8",fontSize:13,marginTop:4}}>Select job site and enter hours for your crew</p>
             </div>
 
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:18,marginBottom:18}}>
               <div className="card" style={{padding:20}}>
-                <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:1}}>Step 1 â€” Job Site</div>
+                <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:1}}>Step 1 — Job Site</div>
                 <div style={{display:"flex",flexDirection:"column",gap:7}}>
                   {jobs.map(j => (
                     <div key={j.id} className={"sc"+(selectedJob===j.id?" on":"")} onClick={() => setSelectedJob(j.id)}>
@@ -571,7 +571,7 @@ export default function App() {
               </div>
 
               <div className="card" style={{padding:20}}>
-                <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:1}}>Step 2 â€” Work Date</div>
+                <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,marginBottom:12,textTransform:"uppercase",letterSpacing:1}}>Step 2 — Work Date</div>
                 <input type="date" value={crewDate} onChange={e => setCrewDate(e.target.value)} style={{marginBottom:10}} />
                 {crewDate && <div style={{fontSize:12,color:"#F97316",fontWeight:500,marginBottom:16}}>{fDateLong(crewDate)}</div>}
                 <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>Your Crew</div>
@@ -588,12 +588,12 @@ export default function App() {
               <div className="card fade" style={{padding:22}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18,flexWrap:"wrap",gap:10}}>
                   <div>
-                    <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:3}}>Step 3 â€” Enter Hours</div>
+                    <div style={{fontSize:11,color:"#8B8FA8",fontWeight:700,textTransform:"uppercase",letterSpacing:1,marginBottom:3}}>Step 3 — Enter Hours</div>
                     <div style={{fontWeight:700,fontSize:15,color:"#F97316"}}>{jobs.find(j=>j.id===selectedJob)?jobs.find(j=>j.id===selectedJob).name:""}</div>
                   </div>
                   <div style={{background:"#252836",borderRadius:9,padding:"7px 13px",fontSize:13}}>
                     <span style={{color:"#F97316",fontWeight:700}}>{totalCrewHrs.toFixed(1)} hrs</span>
-                    <span style={{color:"#555",margin:"0 5px"}}>Â·</span>
+                    <span style={{color:"#555",margin:"0 5px"}}>·</span>
                     <span style={{color:"#10B981",fontWeight:600}}>{filledWorkers}/{crewWorkers.length} workers</span>
                   </div>
                 </div>
@@ -664,7 +664,7 @@ export default function App() {
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22,flexWrap:"wrap",gap:12}}>
               <div>
                 <h1 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:21,fontWeight:700}}>Admin Dashboard</h1>
-                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Xtreme Contractors â€” synced with Google Sheets</p>
+                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Xtreme Contractors — synced with Google Sheets</p>
               </div>
               <button className="btn btn-or" onClick={exportCSV} style={{fontSize:13}}>Export CSV (QuickBooks)</button>
             </div>
@@ -714,7 +714,7 @@ export default function App() {
                               </div>
                               <span style={{fontSize:13,fontWeight:700}}>
                                 <span style={{color:"#F97316"}}>{s.hrs.toFixed(1)}h</span>
-                                <span style={{color:"#444",margin:"0 3px"}}>Â·</span>
+                                <span style={{color:"#444",margin:"0 3px"}}>·</span>
                                 <span style={{color:"#10B981"}}>${s.cost.toFixed(0)}</span>
                               </span>
                             </div>
@@ -738,7 +738,7 @@ export default function App() {
                               </div>
                               <span style={{fontSize:13,fontWeight:700}}>
                                 <span style={{color:j.color}}>{j.hrs.toFixed(1)}h</span>
-                                <span style={{color:"#444",margin:"0 3px"}}>Â·</span>
+                                <span style={{color:"#444",margin:"0 3px"}}>·</span>
                                 <span style={{color:"#10B981"}}>${j.cost.toFixed(0)}</span>
                               </span>
                             </div>
@@ -773,7 +773,7 @@ export default function App() {
                     {filteredEntries.length===0 ? (
                       <div style={{textAlign:"center",color:"#444",padding:"36px 0",fontSize:13}}>No entries yet.</div>
                     ) : (
-                      <div style={{overflowRemove:"auto"}}>
+                      <div style={{overflowX:"auto"}}>
                         <table>
                           <thead>
                             <tr>{["Sub","Worker","Job","Date","Hrs","Rate","OT","Pay","Status",""].map(h => <th key={h}>{h}</th>)}</tr>
@@ -794,13 +794,13 @@ export default function App() {
                                   <td style={{color:"#8B8FA8",whiteSpace:"nowrap"}}>{fDate(e.clockIn)}</td>
                                   <td style={{fontWeight:700,color:"#F97316"}}>{h.toFixed(1)}h</td>
                                   <td style={{color:"#8B8FA8",fontSize:11}}>{s?(s.payType==="daily"?"$"+s.rate+"/day":"$"+s.rate+"/hr"):""}</td>
-                                  <td style={{color:ot>0?"#FBBF24":"#444",fontWeight:ot>0?700:400}}>{s&&s.payType==="daily"?"â€”":ot>0?"+"+ot.toFixed(1)+"h":"â€”"}</td>
+                                  <td style={{color:ot>0?"#FBBF24":"#444",fontWeight:ot>0?700:400}}>{s&&s.payType==="daily"?"—":ot>0?"+"+ot.toFixed(1)+"h":"—"}</td>
                                   <td style={{color:"#10B981",fontWeight:700}}>${pay.toFixed(0)}</td>
                                   <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"Approved":"Pending"}</span></td>
                                   <td>
                                     <div style={{display:"flex",gap:4}}>
                                       {!e.approved && <button className="btn btn-gr btn-sm" onClick={() => approveEntry(e.id)} disabled={syncing}>Approve</button>}
-                                      <button className="btn btn-rd btn-sm" onClick={() => deleteEntry(e.id)}>Remove</button>
+                                      <button className="btn btn-rd btn-sm" onClick={() => deleteEntry(e.id)}>X</button>
                                     </div>
                                   </td>
                                 </tr>
@@ -872,8 +872,8 @@ export default function App() {
                         <div key={j.id} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 0",borderBottom:"1px solid #1E2130"}}>
                           <div style={{width:10,height:10,borderRadius:"50%",background:j.color,flexShrink:0}} />
                           <div style={{flex:1,fontSize:13,fontWeight:500}}>{j.name}</div>
-                          <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:j.name,color:j.color}); setEditing(j); setModal("addJob"); }}>âœï¸</button>
-                          <button className="btn btn-rd btn-sm" onClick={() => removeJob(j.id)}>Remove</button>
+                          <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:j.name,color:j.color}); setEditing(j); setModal("addJob"); }}>✏️</button>
+                          <button className="btn btn-rd btn-sm" onClick={() => removeJob(j.id)}>X</button>
                         </div>
                       ))}
                     </div>
@@ -890,11 +890,11 @@ export default function App() {
                             <div style={{flex:1}}>
                               <div style={{fontSize:13,fontWeight:600}}>{s.name}</div>
                               <div style={{fontSize:11,color:"#8B8FA8"}}>
-                                {s.trade} Â· <span style={{color:"#10B981"}}>{s.payType==="daily"?"$"+s.rate+"/day":"$"+s.rate+"/hr"}</span> Â· PIN: <span style={{color:"#F97316",fontWeight:700}}>{s.pin}</span>
+                                {s.trade} · <span style={{color:"#10B981"}}>{s.payType==="daily"?"$"+s.rate+"/day":"$"+s.rate+"/hr"}</span> · PIN: <span style={{color:"#F97316",fontWeight:700}}>{s.pin}</span>
                               </div>
                             </div>
-                            <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:s.name,trade:s.trade,payType:s.payType,rate:s.rate,pin:s.pin}); setEditing(s); setModal("addSub"); }}>âœï¸</button>
-                            <button className="btn btn-rd btn-sm" onClick={() => removeSub(s.id)}>Remove</button>
+                            <button className="btn btn-ghost btn-sm" onClick={() => { setForm({name:s.name,trade:s.trade,payType:s.payType,rate:s.rate,pin:s.pin}); setEditing(s); setModal("addSub"); }}>✏️</button>
+                            <button className="btn btn-rd btn-sm" onClick={() => removeSub(s.id)}>X</button>
                           </div>
                         </div>
                       ))}
@@ -916,7 +916,7 @@ export default function App() {
                                 <div key={w.id} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:"1px solid #1E2130"}}>
                                   <div style={{width:22,height:22,borderRadius:"50%",background:"#1A1D27",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#F97316",flexShrink:0}}>{ini(w.name)}</div>
                                   <span style={{flex:1,fontSize:12,fontWeight:500}}>{w.name}</span>
-                                  <button className="btn btn-rd" style={{padding:"2px 7px",fontSize:11,borderRadius:6}} onClick={() => removeWorker(w.id)}>Remove</button>
+                                  <button className="btn btn-rd" style={{padding:"2px 7px",fontSize:11,borderRadius:6}} onClick={() => removeWorker(w.id)}>X</button>
                                 </div>
                               ))}
                             </div>
