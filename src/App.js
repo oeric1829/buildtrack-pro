@@ -171,7 +171,7 @@ function PinScreen({ subs, onLogin }) {
       <div style={{width:320,textAlign:"center"}}>
         <div style={{width:56,height:56,background:"#F97316",borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,margin:"0 auto 20px"}}>B</div>
         <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:700,fontSize:22,color:"#fff",marginBottom:4}}>BuildTrack Pro</div>
-        <div style={{fontSize:13,color:"#8B8FA8",marginBottom:36}}>Removetreme Contractors</div>
+        <div style={{fontSize:13,color:"#8B8FA8",marginBottom:36}}>Xtreme Contractors</div>
         <div style={{fontSize:13,color:shake?"#EF4444":"#8B8FA8",marginBottom:18,fontWeight:500}}>{label}</div>
         <div className={shake?"shake":""} style={{display:"flex",justifyContent:"center",gap:16,marginBottom:36}}>
           {[0,1,2,3].map(i => (
@@ -655,7 +655,7 @@ export default function App() {
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22,flexWrap:"wrap",gap:12}}>
               <div>
                 <h1 style={{fontFamily:"'Space Grotesk',sans-serif",fontSize:21,fontWeight:700}}>Admin Dashboard</h1>
-                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Removetreme Contractors â€” synced with Google Sheets</p>
+                <p style={{color:"#8B8FA8",fontSize:13,marginTop:3}}>Xtreme Contractors â€” synced with Google Sheets</p>
               </div>
               <button className="btn btn-or" onClick={exportCSV} style={{fontSize:13}}>Export CSV (QuickBooks)</button>
             </div>
