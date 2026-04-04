@@ -530,9 +530,9 @@ export default function App() {
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
-            {isAdmin && <button className="btn btn-ghost btn-sm" onClick={loadEntries} disabled={loadingEntries}>R Refresh</button>}
+            {isAdmin && <button className="btn btn-ghost btn-sm" onClick={loadEntries} disabled={loadingEntries}>Refresh</button>}
             {isAdmin && <div style={{fontSize:12,color:"#8B8FA8",background:"#1A1D27",borderRadius:8,padding:"5px 10px"}}>{fTime(now)}</div>}
-            <button className="btn btn-ghost btn-sm" onClick={() => { setSession(null); setSelectedJob(null); setCrewHours({}); setEntries([]); }}>Logout Logout</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => { setSession(null); setSelectedJob(null); setCrewHours({}); setEntries([]); }}>Logout</button>
           </div>
         </div>
       </div>
@@ -670,13 +670,13 @@ export default function App() {
               <>
                 <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:13,marginBottom:20}}>
                   {[
-                    {label:"Total Entries", value:entries.length, icon:"=", color:"#3B82F6"},
-                    {label:"Total Hours", value:totalHrs.toFixed(1)+"h", icon:"T", color:"#F97316"},
-                    {label:"Pending", value:pending, icon:"!ï¸", color:"#FBBF24"},
-                    {label:"Est. Labor Cost", value:"$"+totalCost.toLocaleString("en-US",{maximumFractionDigits:0}), icon:"$", color:"#10B981"}
+                    {label:"Total Entries", value:entries.length, icon:"", color:"#3B82F6"},
+                    {label:"Total Hours", value:totalHrs.toFixed(1)+"h", icon:"", color:"#F97316"},
+                    {label:"Pending", value:pending, icon:"", color:"#FBBF24"},
+                    {label:"Est. Labor Cost", value:"$"+totalCost.toLocaleString("en-US",{maximumFractionDigits:0}), icon:"", color:"#10B981"}
                   ].map(s => (
                     <div className="card" key={s.label} style={{padding:16}}>
-                      <div style={{fontSize:18,marginBottom:8}}>{s.icon}</div>
+                      <div style={{fontSize:18,marginBottom:8}}></div>
                       <div style={{fontSize:22,fontWeight:700,color:s.color,fontFamily:"'Space Grotesk',sans-serif"}}>{s.value}</div>
                       <div style={{fontSize:11,color:"#8B8FA8",marginTop:3}}>{s.label}</div>
                     </div>
@@ -684,7 +684,7 @@ export default function App() {
                 </div>
 
                 <div style={{display:"flex",gap:4,marginBottom:16,background:"#1A1D27",borderRadius:11,padding:4,width:"fit-content",flexWrap:"wrap"}}>
-                  {[["overview","~ Overview"],["timesheets","= Timesheets"],["costs","$ Costs"],["manage","~ Manage"]].map(([t,l]) => (
+                  {[["overview","Overview"],["timesheets","Timesheets"],["costs","Costs"],["manage","Manage"]].map(([t,l]) => (
                     <button key={t} className={"tab"+(adminTab===t?" on":"")} onClick={() => setAdminTab(t)}>{l}</button>
                   ))}
                 </div>
@@ -787,7 +787,7 @@ export default function App() {
                                   <td style={{color:"#8B8FA8",fontSize:11}}>{s?(s.payType==="daily"?"$"+s.rate+"/day":"$"+s.rate+"/hr"):""}</td>
                                   <td style={{color:ot>0?"#FBBF24":"#444",fontWeight:ot>0?700:400}}>{s&&s.payType==="daily"?"â€”":ot>0?"+"+ot.toFixed(1)+"h":"â€”"}</td>
                                   <td style={{color:"#10B981",fontWeight:700}}>${pay.toFixed(0)}</td>
-                                  <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"Approve":"Pending"}</span></td>
+                                  <td><span className="pill" style={{background:e.approved?"rgba(16,185,129,.14)":"rgba(249,115,22,.14)",color:e.approved?"#10B981":"#F97316"}}>{e.approved?"Approved":"Pending"}</span></td>
                                   <td>
                                     <div style={{display:"flex",gap:4}}>
                                       {!e.approved && <button className="btn btn-gr btn-sm" onClick={() => approveEntry(e.id)} disabled={syncing}>Approve</button>}
