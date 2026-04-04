@@ -207,9 +207,18 @@ function Modal({ title, onClose, children }) {
 
 export default function App() {
   const [session, setSession] = useState(null);
-  const [jobs, setJobs] = useState(() => lsGet(SK.jobs, DEFAULT_JOBS));
-  const [subs, setSubs] = useState(() => lsGet(SK.subs, DEFAULT_SUBS));
-  const [workers, setWorkers] = useState(() => lsGet(SK.workers, DEFAULT_WORKERS));
+  const [jobs, setJobs] = useState(() => {
+    const saved = lsGet(SK.jobs, null);
+    return (saved && saved.length > 0) ? saved : DEFAULT_JOBS;
+  });
+  const [subs, setSubs] = useState(() => {
+    const saved = lsGet(SK.subs, null);
+    return (saved && saved.length > 0) ? saved : DEFAULT_SUBS;
+  });
+  const [workers, setWorkers] = useState(() => {
+    const saved = lsGet(SK.workers, null);
+    return (saved && saved.length > 0) ? saved : DEFAULT_WORKERS;
+  });
   const [entries, setEntries] = useState([]);
   const [loadingEntries, setLoadingEntries] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -419,7 +428,7 @@ export default function App() {
     const csv = rows.map(r => r.map(v => '"'+String(v||"").replace(/"/g,'""')+'"').join(",")).join("\n");
     const a = document.createElement("a");
     a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
-    a.download = "Removetreme_Contractors_"+crewDate+".csv";
+    a.download = "Xtreme_Contractors_"+crewDate+".csv";
     a.click();
     showToast("CSV exported!");
   }
