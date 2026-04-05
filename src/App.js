@@ -248,21 +248,28 @@ export default function App() {
       const fetchData = apiGet("getEntries");
       const data = await Promise.race([fetchData, timeout]);
       if (data && Array.isArray(data)) {
-        const mapped = data.map(e => ({
-          id: e.id,
-          subId: (subs.find(s => s.name === e.subName) || {}).id || e.subName,
-          workerId: (workers.find(w => w.name === e.workerName) || {}).id || e.workerName,
-          jobId: (jobs.find(j => j.name === e.jobName) || {}).id || e.jobName,
-          clockIn: new Date(e.date + "T07:00:00").toISOString(),
-          clockOut: new Date(new Date(e.date + "T07:00:00").getTime() + parseFloat(e.hours)*3600000).toISOString(),
-          approved: e.approved,
-          submittedAt: e.submittedAt,
-          subName: e.subName,
-          workerName: e.workerName,
-          jobName: e.jobName,
-          hours: parseFloat(e.hours),
-          pay: parseFloat(e.pay),
-        }));
+        const mapped = data.filter(e => e && e.id).map(e => {
+          const foundSub = subs.find(s => s.name === e.subName);
+          const foundWorker = workers.find(w => w.name === e.workerName);
+          const foundJob = jobs.find(j => j.name === e.jobName);
+          const hours = parseFloat(e.hours) || 0;
+          const dateStr = e.date ? String(e.date).slice(0,10) : new Date().toISOString().slice(0,10);
+          const clockIn = new Date(dateStr + "T07:00:00").toISOString();
+          const clockOut = new Date(new Date(dateStr + "T07:00:00").getTime() + hours*3600000).toISOString();
+          return {
+            id: String(e.id),
+            subId: foundSub ? foundSub.id : ("S_"+e.subName),
+            workerId: foundWorker ? foundWorker.id : ("W_"+e.workerName),
+            jobId: foundJob ? foundJob.id : ("J_"+e.jobName),
+            clockIn, clockOut,
+            approved: e.approved === true || e.approved === "Yes",
+            submittedAt: e.submittedAt || clockIn,
+            subName: e.subName || "",
+            workerName: e.workerName || "",
+            jobName: e.jobName || "",
+            hours, pay: parseFloat(e.pay) || 0,
+          };
+        });
         setEntries(mapped);
       }
     } catch(err) {
