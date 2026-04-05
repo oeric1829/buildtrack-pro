@@ -343,20 +343,19 @@ export default function App() {
   }
 
   async function approveEntry(id) {
-    setSyncing(true);
-    await apiPost({ action:"approve", id });
-    await loadEntries();
-    setSyncing(false);
-    showToast("Approved Approve");
+    setEntries(prev => prev.map(e => e.id===id ? {...e, approved:true} : e));
+    showToast("Approved");
+    apiPost({ action:"approve", id }).catch(err => console.log("Sheets sync:", err));
   }
 
   async function approveAll() {
+    setEntries(prev => prev.map(e => !e.approved ? {...e, approved:true} : e));
+    showToast("All approved!");
     setSyncing(true);
     const pending = entries.filter(e => !e.approved);
     for (const e of pending) {
       await apiPost({ action:"approve", id:e.id });
     }
-    await loadEntries();
     setSyncing(false);
     showToast("All approved!");
   }
