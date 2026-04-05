@@ -75,10 +75,11 @@ function calcOT(entry, sub) {
 
 async function apiPost(body) {
   try {
-    const params = new URLSearchParams();
-    params.append("action", body.action);
-    params.append("payload", JSON.stringify(body));
-    const res = await fetch(SCRIPT_URL + "?" + params.toString());
+    const res = await fetch("/api/sheets", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
     return await res.json();
   } catch (e) {
     console.error("API error", e);
@@ -88,7 +89,7 @@ async function apiPost(body) {
 
 async function apiGet(action) {
   try {
-    const res = await fetch(SCRIPT_URL + "?action=" + action);
+    const res = await fetch("/api/sheets?action=" + action);
     return await res.json();
   } catch (e) {
     console.error("API error", e);
@@ -242,24 +243,30 @@ export default function App() {
 
   const loadEntries = useCallback(async () => {
     setLoadingEntries(true);
-    const data = await apiGet("getEntries");
-    if (data && Array.isArray(data)) {
-      const mapped = data.map(e => ({
-        id: e.id,
-        subId: (subs.find(s => s.name === e.subName) || {}).id || e.subName,
-        workerId: (workers.find(w => w.name === e.workerName) || {}).id || e.workerName,
-        jobId: (jobs.find(j => j.name === e.jobName) || {}).id || e.jobName,
-        clockIn: new Date(e.date + "T07:00:00").toISOString(),
-        clockOut: new Date(new Date(e.date + "T07:00:00").getTime() + parseFloat(e.hours)*3600000).toISOString(),
-        approved: e.approved,
-        submittedAt: e.submittedAt,
-        subName: e.subName,
-        workerName: e.workerName,
-        jobName: e.jobName,
-        hours: parseFloat(e.hours),
-        pay: parseFloat(e.pay),
-      }));
-      setEntries(mapped);
+    try {
+      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 6000));
+      const fetchData = apiGet("getEntries");
+      const data = await Promise.race([fetchData, timeout]);
+      if (data && Array.isArray(data)) {
+        const mapped = data.map(e => ({
+          id: e.id,
+          subId: (subs.find(s => s.name === e.subName) || {}).id || e.subName,
+          workerId: (workers.find(w => w.name === e.workerName) || {}).id || e.workerName,
+          jobId: (jobs.find(j => j.name === e.jobName) || {}).id || e.jobName,
+          clockIn: new Date(e.date + "T07:00:00").toISOString(),
+          clockOut: new Date(new Date(e.date + "T07:00:00").getTime() + parseFloat(e.hours)*3600000).toISOString(),
+          approved: e.approved,
+          submittedAt: e.submittedAt,
+          subName: e.subName,
+          workerName: e.workerName,
+          jobName: e.jobName,
+          hours: parseFloat(e.hours),
+          pay: parseFloat(e.pay),
+        }));
+        setEntries(mapped);
+      }
+    } catch(err) {
+      console.log("Sheets not connected yet:", err.message);
     }
     setLoadingEntries(false);
   }, [subs, workers, jobs]);
